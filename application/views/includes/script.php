@@ -31,15 +31,34 @@
         $('#table_id').DataTable();
         $('#table_list').DataTable()
 
-        var ip = ''
+        // $.getJSON("https://api.ipgeolocation.io/ipgeo?apiKey=9aa8b83909084d2280096230d861dae9", function(response) {
+        //     var data = new FormData();
+        //     data.append('ip', response.ip)
+        //     data.append('city', response.city)
 
-        $.getJSON("https://api.ipify.org?format=json", function(data) {
-            ip = data.ip
-            console.log(ip)
-        })
-
-        // $.getJSON("https://api.ipgeolocation.io/ipgeo?apiKey=9aa8b83909084d2280096230d861dae9", function(result) {
-        //     console.log('res', result);
+        //     $.ajax({
+        //         url: '<?= base_url('visitor/insert') ?>',
+        //         type: 'POST',
+        //         data: data,
+        //         processData: false,
+        //         contentType: false,
+        //         cache: false,
+        //         success: function(result) {
+        //             var data = new FormData();
+        //             data.append('city', response.city)
+        //             $.ajax({
+        //                 url: '<?= base_url('visitor/email'); ?>',
+        //                 type: 'POST',
+        //                 data: data,
+        //                 processData: false,
+        //                 contentType: false,
+        //                 cache: false,
+        //                 success: function(result) {
+        //                     console.log(JSON.parse(result));
+        //                 }
+        //             })
+        //         }
+        //     })
         // });
 
         $('#btn-submit').on('click', function(e) {
