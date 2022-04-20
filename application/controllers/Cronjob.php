@@ -23,11 +23,17 @@ class Cronjob extends CI_Controller
             foreach ($data as $key) {
                 $newData = '
                 <li>
-                    <p><strong>' . $key['data_name'] . '</strong></p>
-                    <a href="' . $key['access'] . '">Link</a>
+                    <div style="display: flex; align-items: center;">
+                        <div>
+                            <p style="margin-right:20px"><strong>' . $key['data_name'] . '</strong></p>
+                            <a href="' . $key['access'] . '" style="margin-top: -15px">Link</a>
+                        </div>
+                        <div>
+                            <img src="' . base_url('assets/img/data/') . '' . $key['photo'] . '" width="50" height="70">
+                        </div>
+                    </div>
                 </li>
                 ';
-
                 $list .= $newData;
             };
         }
@@ -50,7 +56,7 @@ class Cronjob extends CI_Controller
 
                 <ul>" . $list . "</ul><br><br>
 
-                <a href='https://satudata.pertanian.go.id/'>Katalog Data</a><br>
+                <a href='https://satudata.pertanian.go.id/'>Portal Satudata</a><br>
                 <a href='" . base_url('auth/login') . "'>Login Simpeldatin</a><br>
                 <a href='#'>Guide Book</a><br>
                 <br><br><br>
@@ -68,14 +74,21 @@ class Cronjob extends CI_Controller
         $date = date('Y-m-d', strtotime('-1 days', strtotime(date('Y-m-d'))));
         $data = $this->data->getDataByDate($date);
         $arr = [];
-        $data = $this->data->getAllDataByDate(date('Y-m-d'));
+        $new = $this->data->getAllDataByDate(date('Y-m-d'));
         $list = '';
-        if ($data) {
-            foreach ($data as $key) {
+        if ($new) {
+            foreach ($new as $key) {
                 $newData = '
                 <li>
-                    <p><strong>' . $key['data_name'] . '</strong></p>
-                    <a href="' . $key['access'] . '">Link</a>
+                    <div style="display: flex; align-items: center;">
+                        <div>
+                            <p style="margin-right:20px"><strong>' . $key['data_name'] . '</strong></p>
+                            <a href="' . $key['access'] . '" style="margin-top: -15px">Link</a>
+                        </div>
+                        <div>
+                            <img src="' . base_url('assets/img/data/') . '' . $key['photo'] . '" width="50" height="70">
+                        </div>
+                    </div>
                 </li>
                 ';
 
@@ -119,7 +132,7 @@ class Cronjob extends CI_Controller
 
                     <ul>" . $list . "</ul><br><br>
 
-                    <a href='https://satudata.pertanian.go.id/'>Katalog Data</a><br>
+                    <a href='https://satudata.pertanian.go.id/'>Portal Satudata</a><br>
                     <a href='" . base_url('auth/login') . "'>Login Simpeldatin</a><br>
                     <a href='#'>Guide Book</a><br>
                     <br><br><br>

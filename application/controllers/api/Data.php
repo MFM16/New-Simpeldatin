@@ -3,8 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 use chriskacerguis\RestServer\RestController;
 
-require APPPATH . 'libraries/RESTController.php';
-require APPPATH . 'libraries/Format.php';
+require './application/libraries/RestController.php';
+require './application/libraries/Format.php';
 
 class Data extends RestController
 {
@@ -34,31 +34,49 @@ class Data extends RestController
 
     public function index_post()
     {
-        $data = [
-            'category_id' => $this->post('category'),
-            'data_name' => $this->post('name'),
-            'specific_commodity' => $this->post('specific'),
-            'data_source' => $this->post('source'),
-            'release_period' => $this->post('period'),
-            'level' => $this->post('level'),
-            'availability' => $this->post('availability'),
-            'release_time' => $this->post('release'),
-            'access' => $this->post('access'),
-            'created_at' => date('y-m-d H:i:s'),
-            'updated_at' => NULL,
-            'deleted_at' => NULL
-        ];
+        $data = $this->post()['form-data'];
+        $arr = json_decode($data);
 
-        try {
-            $this->data->add($data);
-            $this->response([
-                'status' => true,
-                'message' => 'New data has been created',
-                'data' => $data,
-            ], 200);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            die();
+        $exe = explode('.', $_FILES['photo']['name']);
+        $filename = $exe[0] . rand(1, 10000) . '.' . strtolower($exe[1]);
+        $config['allowed_types'] = 'jpg|png|jpeg|';
+        $config['max_size']      = '2048';
+        $config['upload_path'] = './assets/img/data/';
+        $config['file_name'] = $filename;
+
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('photo')) {
+            $data = [
+                'category_id' => NULL,
+                'data_name' => $arr->name,
+                'specific_commodity' => $arr->specific,
+                'data_source' => NULL,
+                'release_period' => NULL,
+                'level' => NULL,
+                'availability' => NULL,
+                'release_time' => NULL,
+                'access' => $arr->access,
+                'photo' => $filename,
+                'created_at' => date('y-m-d H:i:s'),
+                'updated_at' => NULL,
+                'deleted_at' => NULL
+            ];
+
+            if ($this->data->add($data)) {
+                $this->response([
+                    'status' => true,
+                    'message' => 'New data has been created',
+                    'data' => $data
+                ], RESTController::HTTP_CREATED);
+            } else {
+                $this->response([
+                    'status' => false,
+                    'message' => 'Failed to create new data'
+                ], 400);
+            }
+        } else {
+            echo $this->upload->display_errors();
         }
     }
 }

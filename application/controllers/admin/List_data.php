@@ -37,6 +37,7 @@ class List_data extends CI_Controller
                 'availability' => $availability,
                 'release_time' => $release,
                 'access' => $access,
+                'photo' => NULL,
                 'created_at' => date('y-m-d H:i:s'),
                 'updated_at' => NULL,
                 'deleted_at' => NULL
