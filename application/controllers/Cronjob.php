@@ -14,8 +14,23 @@ class Cronjob extends CI_Controller
 
     public function notiflogin()
     {
-        $date = date('Y-m-d', strtotime('-3 days', strtotime(date('Y-m-d'))));
+        // $date = date('Y-m-d', strtotime('-30 days', strtotime(date('Y-m-d'))));
+        $date = date('Y-m-d');
         $user = $this->user->getEmailByDate($date);
+        $data = $this->data->getAllDataByDate(date('Y-m-d'));
+        $list = '';
+        if ($data) {
+            foreach ($data as $key) {
+                $newData = '
+                <li>
+                    <p><strong>' . $key['data_name'] . '</strong></p>
+                    <a href="' . $key['access'] . '">Link</a>
+                </li>
+                ';
+
+                $list .= $newData;
+            };
+        }
 
         if ($user) {
             $length = count($user);
@@ -31,7 +46,10 @@ class Cronjob extends CI_Controller
 
                 Sudah 3 hari, dari hari terakhir bapak / ibu meminta data di Website SIMPELDATIN.<br>
                 Terdapat beberapa data baru yang sesuai dengan data yang terakhir kali diminta.<br>
-                Silahkan klik link di bawah ini untuk melihat data - data tersebut<br>
+                Silahkan klik link di bawah ini untuk melihat data - data tersebut<br><br>
+
+                <ul>" . $list . "</ul><br><br>
+
                 <a href='https://satudata.pertanian.go.id/'>Katalog Data</a><br>
                 <a href='" . base_url('auth/login') . "'>Login Simpeldatin</a><br>
                 <a href='#'>Guide Book</a><br>
@@ -50,6 +68,20 @@ class Cronjob extends CI_Controller
         $date = date('Y-m-d', strtotime('-1 days', strtotime(date('Y-m-d'))));
         $data = $this->data->getDataByDate($date);
         $arr = [];
+        $data = $this->data->getAllDataByDate(date('Y-m-d'));
+        $list = '';
+        if ($data) {
+            foreach ($data as $key) {
+                $newData = '
+                <li>
+                    <p><strong>' . $key['data_name'] . '</strong></p>
+                    <a href="' . $key['access'] . '">Link</a>
+                </li>
+                ';
+
+                $list .= $newData;
+            };
+        }
 
         if ($data) {
             for ($i = 0; $i < count($data); $i++) {
@@ -83,7 +115,10 @@ class Cronjob extends CI_Controller
                     <br><br><br><br>
 
                     Terdapat data pertanian baru yang mungkin sesuai dengan data yang pernah Bapak/Ibu inginkan.<br>
-                    Silahkan klik link di bawah ini untuk melihat data - data tersebut<br>
+                    Silahkan klik link di bawah ini untuk melihat data - data tersebut<br><br>
+
+                    <ul>" . $list . "</ul><br><br>
+
                     <a href='https://satudata.pertanian.go.id/'>Katalog Data</a><br>
                     <a href='" . base_url('auth/login') . "'>Login Simpeldatin</a><br>
                     <a href='#'>Guide Book</a><br>

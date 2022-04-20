@@ -23,6 +23,14 @@ class Data_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
+    public function getAllDataByDate($date)
+    {
+        $this->db->where('created_at', $date);
+        $this->db->where('deleted_at', NULL);
+        $this->db->from('list_data_table');
+        return $this->db->get()->result_array();
+    }
+
     public function getDataByCategoryId($category_id)
     {
         $this->db->where('category_id', $category_id);
