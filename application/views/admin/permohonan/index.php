@@ -22,7 +22,6 @@
                             <input type="hidden" id="special" name="special" value="1">
                             <?php if ($this->session->tempdata('sub_role') == 3) : ?>
                                 <input type="hidden" id="officer_id" name="officer_id" value="<?= $this->session->tempdata('officer') ?>">
-                                <?= $this->session->tempdata('officer') ?><?= 'officer' ?>
                             <?php elseif ($this->session->tempdata('sub_role') == 1) : ?>
                                 <input type="hidden" id="sub_field_id" name="sub_field_id" value="<?= $this->session->tempdata('sub_field') ?>">
                             <?php elseif ($this->session->tempdata('sub_role') == 2) : ?>
@@ -107,7 +106,6 @@
                             <input type="hidden" id="special" name="special" value="0">
                             <?php if ($this->session->tempdata('sub_role') == 3) : ?>
                                 <input type="hidden" id="officer_id" name="officer_id" value="<?= $this->session->tempdata('officer') ?>">
-                                <?= $this->session->tempdata('officer') ?><?= 'officer' ?>
                             <?php elseif ($this->session->tempdata('sub_role') == 1) : ?>
                                 <input type="hidden" id="sub_field_id" name="sub_field_id" value="<?= $this->session->tempdata('sub_field') ?>">
                             <?php elseif ($this->session->tempdata('sub_role') == 2) : ?>

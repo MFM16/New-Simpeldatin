@@ -5,6 +5,7 @@ class Request_model extends CI_Model
     {
         $this->db->select('request_table.*, fields_table.field_name, sub_field_table.sub_field_name, officers_table.officer_name, utilities_table.utility_name, process_table.process_name');
         $this->db->where('request_table.is_special', 0);
+        $this->db->order_by('request_table.request_id', 'DESC');
         $this->db->where('request_table.deleted_at', NULL);
         $this->db->from('request_table');
         $this->db->join('fields_table', 'request_table.field_id = fields_table.field_id', 'left');
@@ -19,6 +20,7 @@ class Request_model extends CI_Model
     {
         $this->db->select('request_table.*, fields_table.field_name, sub_field_table.sub_field_name, officers_table.officer_name, utilities_table.utility_name, process_table.process_name');
         $this->db->where('request_table.is_special', 0);
+        $this->db->order_by('request_table.request_id', 'DESC');
         $this->db->where('request_table.deleted_at', NULL);
         $this->db->where('request_table.field_id', $field_id);
         $this->db->from('request_table');
@@ -35,6 +37,7 @@ class Request_model extends CI_Model
         $this->db->select('request_table.*, fields_table.field_name, sub_field_table.sub_field_name, officers_table.officer_name, utilities_table.utility_name, process_table.process_name');
         $this->db->where('request_table.is_special', 0);
         $this->db->where('request_table.deleted_at', NULL);
+        $this->db->order_by('request_table.request_id', 'DESC');
         $this->db->where('request_table.sub_field_id', $sub_field_id);
         $this->db->from('request_table');
         $this->db->join('fields_table', 'request_table.field_id = fields_table.field_id', 'left');
@@ -50,6 +53,7 @@ class Request_model extends CI_Model
         $this->db->select('request_table.*, fields_table.field_name, sub_field_table.sub_field_name, officers_table.officer_name, utilities_table.utility_name, process_table.process_name');
         $this->db->where('request_table.is_special', 0);
         $this->db->where('request_table.deleted_at', NULL);
+        $this->db->order_by('request_table.request_id', 'DESC');
         $this->db->where('request_table.officer_id', $officer_id);
         $this->db->from('request_table');
         $this->db->join('fields_table', 'request_table.field_id = fields_table.field_id', 'left');
@@ -65,6 +69,7 @@ class Request_model extends CI_Model
         $this->db->select('request_table.*, fields_table.field_name, sub_field_table.sub_field_name, officers_table.officer_name, utilities_table.utility_name');
         $this->db->where('request_table.is_special', 1);
         $this->db->where('request_table.deleted_at', NULL);
+        $this->db->order_by('request_table.request_id', 'DESC');
         $this->db->from('request_table');
         $this->db->join('fields_table', 'request_table.field_id = fields_table.field_id', 'left');
         $this->db->join('sub_field_table', 'request_table.sub_field_id = sub_field_table.sub_field_id', 'left');
@@ -78,6 +83,7 @@ class Request_model extends CI_Model
         $this->db->where('request_table.is_special', 1);
         $this->db->where('request_table.deleted_at', NULL);
         $this->db->where('request_table.field_id', $field_id);
+        $this->db->order_by('request_table.request_id', 'DESC');
         $this->db->from('request_table');
         $this->db->join('fields_table', 'request_table.field_id = fields_table.field_id', 'left');
         $this->db->join('sub_field_table', 'request_table.sub_field_id = sub_field_table.sub_field_id', 'left');
@@ -91,6 +97,7 @@ class Request_model extends CI_Model
         $this->db->where('request_table.is_special', 1);
         $this->db->where('request_table.deleted_at', NULL);
         $this->db->where('request_table.sub_field_id', $sub_field_id);
+        $this->db->order_by('request_table.request_id', 'DESC');
         $this->db->from('request_table');
         $this->db->join('fields_table', 'request_table.field_id = fields_table.field_id', 'left');
         $this->db->join('sub_field_table', 'request_table.sub_field_id = sub_field_table.sub_field_id', 'left');
@@ -104,6 +111,7 @@ class Request_model extends CI_Model
         $this->db->where('request_table.is_special', 1);
         $this->db->where('request_table.deleted_at', NULL);
         $this->db->where('request_table.officer_id', $officer_id);
+        $this->db->order_by('request_table.request_id', 'DESC');
         $this->db->from('request_table');
         $this->db->join('fields_table', 'request_table.field_id = fields_table.field_id', 'left');
         $this->db->join('sub_field_table', 'request_table.sub_field_id = sub_field_table.sub_field_id', 'left');
@@ -117,6 +125,7 @@ class Request_model extends CI_Model
         $this->db->select('request_table.*, fields_table.field_name, utilities_table.utility_name');
         $this->db->where('request_table.process_state', 4);
         $this->db->where('request_table.deleted_at', NULL);
+        $this->db->order_by('request_table.request_id', 'DESC');
         $this->db->from('request_table');
         $this->db->join('fields_table', 'request_table.field_id = fields_table.field_id', 'left');
         $this->db->join('utilities_table', 'request_table.used_for_id = utilities_table.utility_id', 'left');
