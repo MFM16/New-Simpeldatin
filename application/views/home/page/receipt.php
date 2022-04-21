@@ -18,6 +18,7 @@
             </a>
             <h3 class="text-white">Halaman Pencarian Resi</h3>
         </div>
+        <a href="<?= base_url() ?>"><i class="fa-solid fa-arrow-left-long fa-2x" style="color: #ffffff"></i></a>
     </nav>
     <div class="container-fluid mt-5">
         <div class="col-6 mx-auto">

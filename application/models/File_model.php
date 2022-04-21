@@ -25,4 +25,11 @@ class FIle_model extends CI_Model
         $this->db->insert('files_table', $data);
         return $this->db->affected_rows();
     }
+
+    public function delete($id)
+    {
+        $this->db->where('file_id', $id);
+        $this->db->update('files_table', ['deleted_at' => date('Y-m-d H:i:s')]);
+        return $this->db->affected_rows();
+    }
 }

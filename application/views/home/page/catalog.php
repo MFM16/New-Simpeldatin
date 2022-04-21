@@ -18,6 +18,7 @@
             </a>
             <h3 class="text-white">Halaman Katalog Data</h3>
         </div>
+        <a href="<?= base_url() ?>"><i class="fa-solid fa-arrow-left-long fa-2x" style="color: #ffffff"></i></a>
     </nav>
     <div class="col-3" style="margin-top: 20px;">
         <select name="category" id="category" class="form-control" onchange="category(this)">

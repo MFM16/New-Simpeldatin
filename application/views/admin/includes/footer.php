@@ -1293,6 +1293,34 @@
                 }
             })
         })
+
+        $(document).delegate('#btn_delete_file', 'click', function() {
+            $.ajax({
+                url: '<?= base_url('admin/request/destroy/') ?>' + $(this).data('id'),
+                type: 'GET',
+                success: function(result) {
+                    var obj = JSON.parse(result)
+
+                    if (obj.status === true) {
+                        Swal.fire(
+                            'Sukses',
+                            'File Berhasil Dihapus',
+                            'success'
+                        ).then((result) => {
+                            if (result.value) {
+                                location.reload()
+                            }
+                        })
+                    } else {
+                        Swal.fire(
+                            'Gagal',
+                            'File Gagal Dihapus',
+                            'error'
+                        )
+                    }
+                }
+            })
+        })
     })
 </script>
 <script>

@@ -276,7 +276,7 @@ class Request extends CI_Controller
 
     public function upload()
     {
-        $file = str_replace(' ', '_', $_FILES['file']['name']);
+        $file = str_replace([',', ' ', '/', '@'], '_', $_FILES['file']['name']);
         $filename = 'Files_' . $this->input->post('id') . '_' . $file;
         $config['allowed_types'] = 'jpg|png|jpeg|pdf|xls|xlsx|docx';
         $config['max_size']      = '2048';
@@ -559,5 +559,24 @@ class Request extends CI_Controller
     {
         $data = $this->sub_field->getDataByFieldId($field_id);
         echo $data;
+    }
+
+    public function destroy($id)
+    {
+        if ($this->file->delete($id)) {
+            $arr = [
+                'status' => true,
+                'message' => 'File deleted successfully',
+            ];
+
+            echo json_encode($arr);
+        } else {
+            $arr = [
+                'status' => false,
+                'message' => 'File deleted failed',
+            ];
+
+            echo json_encode($arr);
+        }
     }
 }

@@ -5,7 +5,7 @@
 
             <h1 class="h3 mb-3">Data <strong><?= ucfirst($sidebar) ?></strong></h1>
 
-            <div class="col-12 col-lg-12 col-xxl-3 d-flex">
+            <div class="col-12 col-lg-12 col-xxl-12 d-flex">
                 <div class="card flex-fill w-100">
                     <div class="card-header">
                         <h5 class="card-title mb-0">Daftar Pegawai</h5>

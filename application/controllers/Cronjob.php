@@ -22,7 +22,7 @@ class Cronjob extends CI_Controller
         if ($data) {
             foreach ($data as $key) {
                 $newData = '
-                <li>
+                <li style="margin-bottom: 10px">
                     <div style="display: flex; align-items: center;">
                         <div>
                             <p style="margin-right:20px"><strong>' . $key['data_name'] . '</strong></p>

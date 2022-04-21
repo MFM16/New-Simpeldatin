@@ -3,10 +3,13 @@
     <main class="content">
         <div class="container-fluid p-0">
 
-            <h1 class="h3 mb-3">Detail <strong><?= ucfirst($sidebar) ?></strong></h1>
+            <div class="d-flex justify-content-between align-item-center">
+                <h1 class="h3 mb-3">Detail <strong><?= ucfirst($sidebar) ?></strong></h1>
+                <a href="<?= base_url('admin/admin/permohonan') ?>"><i class="fa-solid fa-arrow-left-long fa-2x" style="color: #000000"></i></a>
+            </div>
 
             <div class="row">
-                <div class="col-xl-12 col-xxl-5 d-flex">
+                <div class="col-xl-12 col-xxl-12 d-flex">
                     <div class="w-100">
                         <div class="row">
                             <div class="col-sm-6">
@@ -49,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-12 col-xxl-5 d-flex">
+            <div class="col-xl-12 col-xxl-12 d-flex">
                 <div class="w-100">
                     <div class="row">
                         <div class="col-sm-12">
@@ -102,11 +105,13 @@
                                                     <td>File <?= $i ?></td>
                                                     <td>:</td>
                                                     <td class="col-sm-12 d-flex justify-content-start align-item-center">
-                                                        <div class="col-sm-5 d-flex justify-content-start align-item-center">
+                                                        <div class="col-sm-10 d-flex justify-content-start align-item-center">
                                                             <?= $file['file_name'] ?>
                                                         </div>
-                                                        <div class="col-sm-7" style="margin-left: 3px;">
+                                                        <div class="col-sm-2 d-flex" style="margin-left: 3px;">
                                                             <a class="btn btn-success rounded btn-sm" href="<?= base_url('request/download/') ?><?= $file['file_name'] ?>"><i class="fa-solid fa-download"></i></a>
+
+                                                            <a class="btn btn-danger rounded btn-sm" style="margin-left: 10px;" data-id="<?= $file['file_id'] ?>" id="btn_delete_file"><i class="fa-solid fa-trash"></i></a>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -121,7 +126,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-12 col-xxl-5 d-flex">
+                <div class="col-xl-12 col-xxl-12 d-flex">
                     <div class="w-100">
                         <div class="row">
                             <div class="col-sm-7">
