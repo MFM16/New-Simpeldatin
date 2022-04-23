@@ -2,7 +2,7 @@
     <?php $this->load->view('admin/includes/navbar') ?>
     <div class="content">
         <div class="container-fluid p-0 text-center">
-            <div class="col-12 col-lg-12 col-xxl-3 d-flex">
+            <div class="col-12 col-lg-12 col-xxl-12 d-flex">
                 <div class="card flex-fill w-100 p-3">
                     <div class="photo">
                         <img src="<?= base_url('') ?>assets/img/user/<?= $this->session->tempdata('photo') ?>" alt="" height="200px" width="200px" style="border-radius: 50%;">

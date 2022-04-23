@@ -23,6 +23,7 @@
         $('#table_list').DataTable()
         $('#myTable').DataTable();
         $('#btn_edit_special').hide();
+        $('#btn_edit_place').hide();
         $('#btn-change-data-officer').hide();
         $('#other-used').hide();
         $('#other_used_special').hide();
@@ -67,6 +68,13 @@
         $('#btn-editList').hide()
         $('#btn-list').show()
         $('#modalList').modal('hide')
+    }
+
+    function resetPlace() {
+        $('#form-place').get(0).reset()
+        $('#btn_edit_place').hide();
+        $('#btn-place').show();
+        $('#modalLokasi').modal('hide');
     }
 
     function otherJob(val) {
@@ -1321,6 +1329,162 @@
                 }
             })
         })
+
+        $('#btn-place').on('click', function(e) {
+            e.preventDefault()
+
+            if ($('#error_place').length > 0) {
+                $('#error_place').remove()
+            }
+
+            var formData = new FormData();
+            formData.append('name', $('#name-place').val())
+            formData.append('city', $('#city-place').val())
+            formData.append('district', $('#district-place').val())
+            formData.append('address', $('#address-place').val())
+            formData.append('latitude', $('#latitude-place').val())
+            formData.append('longitude', $('#longitude-place').val())
+            formData.append('link', $('#link-place').val())
+
+            $.ajax({
+                url: '<?= base_url('place/insert') ?>',
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(result) {
+                    var obj = JSON.parse(result)
+                    if (obj.status === true) {
+                        Swal.fire(
+                            'Sukses',
+                            'Data berhasil ditambahkan',
+                            'success'
+                        ).then((result) => {
+                            if (result.value) {
+                                location.reload()
+                            }
+                        })
+                    } else {
+                        var message = '<div class="message" role="alert" id="error_place"> ' + '<p>' + obj.message + '</p>' + '</div > '
+
+                        $('#error-place').append(message);
+                    }
+                }
+            })
+        })
+
+        $(document).delegate('#btnedit_place', 'click', function() {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '<?= base_url('place/show/') ?>' + id,
+                type: 'GET',
+                success: function(result) {
+                    var obj = JSON.parse(result)
+                    var data = obj.data
+
+                    $('#id-place').val(data.place_id)
+                    $('#name-place').val(data.name)
+                    $('#city-place').val(data.city)
+                    $('#district-place').val(data.district)
+                    $('#address-place').val(data.address)
+                    $('#latitude-place').val(data.latitude)
+                    $('#longitude-place').val(data.longitude)
+                    $('#link-place').val(data.gmaps_link)
+
+                    $('#btn_edit_place').show()
+                    $('#btn-place').hide()
+
+                    $('#modalLokasi').modal('show')
+                }
+            })
+        });
+
+        $('#btn_edit_place').on('click', function(e) {
+            e.preventDefault()
+
+            if ($('#error_place').length > 0) {
+                $('#error_place').remove()
+            }
+
+            var formData = new FormData();
+            formData.append('id', $('#id-place').val())
+            formData.append('name', $('#name-place').val())
+            formData.append('city', $('#city-place').val())
+            formData.append('district', $('#district-place').val())
+            formData.append('address', $('#address-place').val())
+            formData.append('latitude', $('#latitude-place').val())
+            formData.append('longitude', $('#longitude-place').val())
+            formData.append('link', $('#link-place').val())
+
+            $.ajax({
+                url: '<?= base_url('place/edit') ?>',
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(result) {
+                    var obj = JSON.parse(result)
+                    if (obj.status === true) {
+                        Swal.fire(
+                            'Sukses',
+                            'Data berhasil Diperbaharui',
+                            'success'
+                        ).then((result) => {
+                            if (result.value) {
+                                location.reload()
+                            }
+                        })
+                    } else {
+                        var message = '<div class="message" role="alert" id="error_place"> ' + '<p>' + obj.message + '</p>' + '</div > '
+
+                        $('#error-place').append(message);
+                    }
+                }
+            })
+        })
+
+        $(document).delegate('#btn_delete_place', 'click', function() {
+            var id = $(this).data('id');
+            Swal.fire({
+                title: 'Apakah anda yakin ?',
+                text: 'Data akan dihapus',
+                icon: 'warning',
+                showCloseButton: true,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Hapus Data'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: '<?= base_url('place/delete/') ?>' + id,
+                        type: 'GET',
+                        success: function(result) {
+                            var obj = JSON.parse(result)
+                            if (obj.status === true) {
+                                Swal.fire(
+                                    'Sukses',
+                                    'Data berhasil dihapus',
+                                    'success'
+                                ).then((result) => {
+                                    if (result.value) {
+                                        location.reload()
+                                    }
+                                })
+                            } else {
+                                Swal.fire(
+                                    'Gagal',
+                                    'Data gagal dihapus',
+                                    'error'
+                                )
+                            }
+                        }
+                    })
+                }
+            })
+        });
     })
 </script>
 <script>

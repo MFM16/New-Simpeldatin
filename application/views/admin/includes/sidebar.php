@@ -106,6 +106,16 @@
                                     <i class="align-middle" data-feather="x"></i> <span class="align-middle">Riwayat Penolakan</span>
                                 </a>
                             </li>
+
+                            <li class="sidebar-header">
+                                Location Based Service
+                            </li>
+
+                            <li class="sidebar-item <?php echo ($sidebar == 'lokasi' ? 'active' : '') ?>">
+                                <a class="sidebar-link" href="<?= base_url('admin/admin/lokasi') ?>">
+                                    <i class="align-middle" data-feather="map"></i> <span class="align-middle">Lokasi</span>
+                                </a>
+                            </li>
                         <?php endif ?>
                     </ul>
                 <?php else : ?>

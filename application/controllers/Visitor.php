@@ -24,6 +24,8 @@ class Visitor extends CI_Controller
             $data = [
                 'ip_address' => $this->input->post('ip'),
                 'city' => $this->input->post('city'),
+                'latitude' => $this->input->post('latitude'),
+                'longitude' => $this->input->post('longitude'),
                 'created_at' => date('Y-m-d'),
                 'deleted_at' => NULL,
             ];
@@ -46,22 +48,23 @@ class Visitor extends CI_Controller
         $city = $this->input->post('city');
 
         if ($this->session->tempdata('email')) {
-            $data = $this->lbs->getDataByDate($this->session->tempdata('email'), $city);
-            if ($data) {
-                $arr = [
-                    'status' => true,
-                    'message' => 'Data exist',
-                ];
-
-                $response = json_encode($arr);
-                echo $response;
-            } else {
-                $data = $this->place->getDataByCity($city);
+            if ($this->session->tempdata('role_id') == 3) {
+                $data = $this->lbs->getDataByDate($this->session->tempdata('email'), $city);
                 if ($data) {
-                    $this->email->from('layanan.pusdatin.kementan@gmail.com', 'Kementrian Pertanian');
-                    $this->email->to($this->session->tempdata('email'));
-                    $this->email->subject('Terdapat Data baru');
-                    $this->email->message("
+                    $arr = [
+                        'status' => true,
+                        'message' => 'Data exist',
+                    ];
+
+                    $response = json_encode($arr);
+                    echo $response;
+                } else {
+                    $data = $this->place->getDataByCity($city);
+                    if ($data) {
+                        $this->email->from('layanan.pusdatin.kementan@gmail.com', 'Kementrian Pertanian');
+                        $this->email->to($this->session->tempdata('email'));
+                        $this->email->subject('Terdapat Data baru');
+                        $this->email->message("
                         Selamat Pagi, <br>
                         Yth, Bapak/ibu
                         <br><br><br><br>
@@ -76,38 +79,46 @@ class Visitor extends CI_Controller
                         Hormat Kami,<br>
                         Pusat Data dan Sistem Informasi Pertanian");
 
-                    if ($this->email->send()) {
-                        $data = [
-                            'email' => $this->session->tempdata('email'),
-                            'city' => $city,
-                            'created_at' => date('y-m-d'),
-                            'deleted_at' => NULL,
-                        ];
+                        if ($this->email->send()) {
+                            $data = [
+                                'email' => $this->session->tempdata('email'),
+                                'city' => $city,
+                                'created_at' => date('y-m-d'),
+                                'deleted_at' => NULL,
+                            ];
 
-                        $this->lbs->insert($data);
+                            $this->lbs->insert($data);
 
-                        $arr = [
-                            'status' => 'success',
-                            'message' => 'email has been sent successfully'
-                        ];
+                            $arr = [
+                                'status' => 'success',
+                                'message' => 'email has been sent successfully'
+                            ];
 
-                        echo json_encode($arr);
+                            echo json_encode($arr);
+                        } else {
+                            $arr = [
+                                'status' => 'failed',
+                                'message' => 'failed to send email'
+                            ];
+
+                            echo json_encode($arr);
+                        }
                     } else {
                         $arr = [
-                            'status' => 'failed',
-                            'message' => 'failed to send email'
+                            'status' => 'success',
+                            'message' => 'Data not found',
                         ];
 
                         echo json_encode($arr);
                     }
-                } else {
-                    $arr = [
-                        'status' => 'success',
-                        'message' => 'Data not found',
-                    ];
-
-                    echo json_encode($arr);
                 }
+            } else {
+                $arr = [
+                    'status' => 'success',
+                    'message' => 'admin/officer',
+                ];
+
+                echo json_encode($arr);
             }
         } else {
             $arr = [

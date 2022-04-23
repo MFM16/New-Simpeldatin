@@ -18,21 +18,20 @@ class Cronjob extends CI_Controller
         $date = date('Y-m-d');
         $user = $this->user->getEmailByDate($date);
         $data = $this->data->getAllDataByDate(date('Y-m-d'));
+
+        var_dump($data);
+        var_dump($user);
+        die;
         $list = '';
         if ($data) {
             foreach ($data as $key) {
                 $newData = '
-                <li style="margin-bottom: 10px">
-                    <div style="display: flex; align-items: center;">
-                        <div>
-                            <p style="margin-right:20px"><strong>' . $key['data_name'] . '</strong></p>
-                            <a href="' . $key['access'] . '" style="margin-top: -15px">Link</a>
-                        </div>
-                        <div>
-                            <img src="' . base_url('assets/img/data/') . '' . $key['photo'] . '" width="50" height="70">
-                        </div>
-                    </div>
-                </li>
+                <a style="margin-bottom: 30px">
+                    <img src="' . base_url('assets/img/data/') . '' . $key['photo'] . '" width="50" height="70">
+                    <p style="margin-right:20px"><strong>' . $key['data_name'] . '</strong></p>
+                    <a href="' . $key['access'] . '" style="margin-top: -30px">Link</a>
+                </a>
+                <br><br>
                 ';
                 $list .= $newData;
             };
@@ -54,7 +53,7 @@ class Cronjob extends CI_Controller
                 Terdapat beberapa data baru yang sesuai dengan data yang terakhir kali diminta.<br>
                 Silahkan klik link di bawah ini untuk melihat data - data tersebut<br><br>
 
-                <ul>" . $list . "</ul><br><br>
+                " . $list . "<br><br>
 
                 <a href='https://satudata.pertanian.go.id/'>Portal Satudata</a><br>
                 <a href='" . base_url('auth/login') . "'>Login Simpeldatin</a><br>
@@ -74,22 +73,17 @@ class Cronjob extends CI_Controller
         $date = date('Y-m-d', strtotime('-1 days', strtotime(date('Y-m-d'))));
         $data = $this->data->getDataByDate($date);
         $arr = [];
-        $new = $this->data->getAllDataByDate(date('Y-m-d'));
+        $new = $this->data->getAllDataByDate($date);
         $list = '';
         if ($new) {
             foreach ($new as $key) {
                 $newData = '
-                <li>
-                    <div style="display: flex; align-items: center;">
-                        <div>
-                            <p style="margin-right:20px"><strong>' . $key['data_name'] . '</strong></p>
-                            <a href="' . $key['access'] . '" style="margin-top: -15px">Link</a>
-                        </div>
-                        <div>
-                            <img src="' . base_url('assets/img/data/') . '' . $key['photo'] . '" width="50" height="70">
-                        </div>
-                    </div>
-                </li>
+                <a style="margin-bottom: 30px">
+                    <img src="' . base_url('assets/img/data/') . '' . $key['photo'] . '" width="50" height="70">
+                    <p style="margin-right:20px"><strong>' . $key['data_name'] . '</strong></p>
+                    <a href="' . $key['access'] . '" style="margin-top: -30px">Link</a>
+                </a>
+                <br><br>
                 ';
 
                 $list .= $newData;
@@ -130,7 +124,7 @@ class Cronjob extends CI_Controller
                     Terdapat data pertanian baru yang mungkin sesuai dengan data yang pernah Bapak/Ibu inginkan.<br>
                     Silahkan klik link di bawah ini untuk melihat data - data tersebut<br><br>
 
-                    <ul>" . $list . "</ul><br><br>
+                    " . $list . "<br><br>
 
                     <a href='https://satudata.pertanian.go.id/'>Portal Satudata</a><br>
                     <a href='" . base_url('auth/login') . "'>Login Simpeldatin</a><br>

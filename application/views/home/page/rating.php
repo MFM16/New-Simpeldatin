@@ -14,14 +14,14 @@
     <div class="container-login">
         <div class="rating">
             <img src="<?= base_url() ?>assets/img/Logokementan.svg" height="124px" width="120px">
-            <h3 style="font-weight: bolder; color: white;">Bagaimana Kepuasan Anda Terhadap Layanan Yang Kami Berikan</h3>
+            <h3 style="font-weight: bolder; color: white;">Bagaimana Kepuasan Anda Terhadap Layanan SIMPELDATIN Yang Kami Berikan</h3>
             <h5 style="font-weight: 500; color: white;">Penilaian anda membuat pelayanan kami menjadi lebih baik</h5>
             <form>
                 <input type="hidden" name="id" id="id" value="<?= $this->uri->segment('3') ?>">
                 <div class="col">
                     <div class="col">
                         <span id="1" class="fas fa-star star-checked"></span>
-                        <span id="2" class="fas fa-star"></span>
+                        <span id="2" class="fas fa-star star-checked"></span>
                         <span id="3" class="fas fa-star"></span>
                         <span id="4" class="fas fa-star"></span>
                         <span id="5" class="fas fa-star"></span>
@@ -60,7 +60,7 @@
             }
         }
 
-        var rate = 1
+        var rate = 2
 
         $(document).ready(function() {
             $('#1').on('click', function() {

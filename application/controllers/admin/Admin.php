@@ -16,6 +16,7 @@ class Admin extends CI_Controller
         $this->load->model('Process_history_model', 'process');
         $this->load->model('Utility_model', 'utility');
         $this->load->model('Data_model', 'data');
+        $this->load->model('Place_model', 'place');
         $this->load->model('Category_model', 'category');
         $this->load->model('Survei_question_model', 'survei');
         if ($this->session->tempdata('role_id')) {
@@ -174,6 +175,16 @@ class Admin extends CI_Controller
         $data['histories'] = $this->process->getRejectData();
         $this->load->view('admin/includes/sidebar', $data);
         $this->load->view('admin/history', $data);
+        $this->load->view('admin/includes/footer', $data);
+    }
+
+    public function lokasi()
+    {
+        $data['judul'] = 'Admin Area';
+        $data['sidebar'] = 'lokasi';
+        $data['places'] = $this->place->getData();
+        $this->load->view('admin/includes/sidebar', $data);
+        $this->load->view('admin/location', $data);
         $this->load->view('admin/includes/footer', $data);
     }
 }

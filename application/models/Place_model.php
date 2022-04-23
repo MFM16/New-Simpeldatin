@@ -1,8 +1,38 @@
 <?php
+
+use function GuzzleHttp\json_encode;
+
 class Place_model extends CI_Model
 {
-    public function getDataByCity($city)
+    public function getDataByDistrict($district)
     {
-        return $this->db->get_where('lbs_table', ['city' => $city])->row_array();
+        return $this->db->get_where('lbs_table', ['district' => $district])->row_array();
+    }
+
+    public function getData()
+    {
+        return $this->db->get_where('lbs_table', ['deleted_at' => NULL])->result_array();
+    }
+
+    public function insert($data)
+    {
+        $this->db->insert('lbs_table', $data);
+        return $this->db->affected_rows();
+    }
+
+    public function getDataById($id)
+    {
+        $this->db->where('place_id', $id);
+        $this->db->where('deleted_at', NULL);
+        $this->db->from('lbs_table');
+        $data = $this->db->get()->row_array();
+        return $data;
+    }
+
+    public function update($id, $data)
+    {
+        $this->db->where('place_id', $id);
+        $this->db->update('lbs_table', $data);
+        return $this->db->affected_rows();
     }
 }
