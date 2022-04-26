@@ -17,6 +17,38 @@
 <script src="https://kit.fontawesome.com/acdab83cb6.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?= base_url('assets/js/app.js') ?>"></script>
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZmFyaGFubWF1bGlkaWFuMTYiLCJhIjoiY2wyZTlsNDVnMTc2djNlbGhhbHRsbXQ3OSJ9.5uZyJXUB8qrbxqnmWoSkNg';
+
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [106.823066, -6.296435],
+        zoom: 10
+    });
+
+    // make a marker for each feature and add it to the map
+    const marker = new mapboxgl.Marker()
+        .setLngLat([106.823066, -6.296435])
+        .addTo(map);
+
+    $.ajax({
+        url: '<?= base_url('visitor/getplace') ?>',
+        type: 'GET',
+        success: function(result) {
+            var obj = JSON.parse(result)
+            var data = obj.data
+
+            $.each(data, function(key, value) {
+                const marker = new mapboxgl.Marker()
+                    .setLngLat([value.longitude, value.latitude])
+                    .addTo(map);
+            })
+        }
+    })
+</script>
+
 <script>
     $(document).ready(function() {
         $('#table_id').DataTable();

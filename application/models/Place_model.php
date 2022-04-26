@@ -6,7 +6,9 @@ class Place_model extends CI_Model
 {
     public function getDataByDistrict($district)
     {
-        return $this->db->get_where('lbs_table', ['district' => $district])->row_array();
+        $this->db->like('district', $district);
+        $this->db->from('lbs_table');
+        return $this->db->get()->result_array();
     }
 
     public function getData()

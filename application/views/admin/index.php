@@ -113,22 +113,26 @@
                         <h5 class="card-title mb-0">Buat Laporan</h5>
                     </div>
                     <div class="card-body">
-                        <form class="d-flex w-100 align-items-center">
+                        <form class="d-flex w-100 align-items-center" action="<?= base_url('admin/report/all') ?>" method="post">
                             <div class="col-12 col-lg-2 col-xxl-3 d-flex">
-                                <select name="from-date" id="from-date" class="form-control">
+                                <select name="monthFrom" id="monthFrom" class="form-control">
                                     <option value="">Pilih Bulan</option>
-                                    <?php foreach ($bulan as $b) : ?>
-                                        <option value="<?= $b ?>"><?= $b ?></option>
-                                    <?php endforeach ?>
+                                    <?php $i = 1;
+                                    foreach ($bulan as $b) : ?>
+                                        <option value="<?= $i ?>"><?= $b ?></option>
+                                    <?php $i++;
+                                    endforeach ?>
                                 </select>
                             </div>
                             <strong>&nbsp;Sampai&nbsp;</strong>
                             <div class="col-12 col-lg-2 col-xxl-3 d-flex">
-                                <select name="to-date" id="to-date" class=" form-control">
+                                <select name="monthTo" id="monthTo" class=" form-control">
                                     <option value="">Pilih Bulan</option>
-                                    <?php foreach ($bulan as $b) : ?>
-                                        <option value="<?= $b ?>"><?= $b ?></option>
-                                    <?php endforeach ?>
+                                    <?php $i = 1;
+                                    foreach ($bulan as $b) : ?>
+                                        <option value="<?= $i ?>"><?= $b ?></option>
+                                    <?php $i++;
+                                    endforeach ?>
                                 </select>
                             </div>
                             &nbsp;
@@ -150,6 +154,16 @@
                         <div class="align-self-center chart chart-lg">
                             <canvas id="chartjs-dashboard-bar"></canvas>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-12 col-xxl-12 d-flex">
+                <div class="card flex-fill w-100">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Sebaran Pengakses Website SIMPELDATIN</h5>
+                    </div>
+                    <div class="card-body d-flex w-100">
+                        <div id='map' style='width: 100%; height: 500px;'></div>
                     </div>
                 </div>
             </div>

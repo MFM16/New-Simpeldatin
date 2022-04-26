@@ -69,6 +69,7 @@ class Admin extends CI_Controller
         $data['count'] = $this->request->countAllData();
         $data['question'] = $this->question->countAllData();
         $data['sent'] = $this->request->countSentData();
+        $data['bulan'] = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
         $this->load->view('admin/includes/sidebar', $data);
         $this->load->view('admin/index', $data);
         $this->load->view('admin/includes/footer', $data);

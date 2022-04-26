@@ -107,3 +107,12 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZmFyaGFubWF1bGlkaWFuMTYiLCJhIjoiY2wyZTlsNDVnMTc2djNlbGhhbHRsbXQ3OSJ9.5uZyJXUB8qrbxqnmWoSkNg';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11'
+        });
+    </script>

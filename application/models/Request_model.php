@@ -400,4 +400,25 @@ class Request_model extends CI_Model
     {
         return $this->db->get_where('request_table', ['deleted_at' => NULL])->result_array();
     }
+
+    public function countDataByField($field, $month, $year)
+    {
+        $this->db->where('deleted_at', NULL);
+        $this->db->where('field_id', $field);
+        $this->db->where('MONTH(request_date)', $month);
+        $this->db->where('YEAR(request_date)', $year);
+        $this->db->from('request_table');
+        return $this->db->count_all_results();
+    }
+
+    public function countDataByFieldStatus($field, $month, $year, $status)
+    {
+        $this->db->where('deleted_at', NULL);
+        $this->db->where('field_id', $field);
+        $this->db->where('process_state', $status);
+        $this->db->where('MONTH(request_date)', $month);
+        $this->db->where('YEAR(request_date)', $year);
+        $this->db->from('request_table');
+        return $this->db->count_all_results();
+    }
 }

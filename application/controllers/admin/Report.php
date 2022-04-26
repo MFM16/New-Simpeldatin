@@ -16,6 +16,27 @@ class Report extends CI_Controller
 
     public function all()
     {
+        $monthFrom = $this->input->post('monthFrom');
+        $monthTo = $this->input->post('monthTo');
+        $year = $this->input->post('year');
+
+        for ($i = $monthFrom; $i <= $monthTo; $i++) {
+            $data['mskUmum' . $i . ''] = $this->request->countDataByField(1, $i, $year);
+            $data['mskKomo' . $i . ''] = $this->request->countDataByField(2, $i, $year);
+            $data['mskNon' . $i . ''] = $this->request->countDataByField(3, $i, $year);
+            $data['mskSi' . $i . ''] = $this->request->countDataByField(4, $i, $year);
+
+            $data['lynUmum' . $i . ''] = $this->request->countDataByFieldStatus(1, $i, $year, 5);
+            $data['lynKomo' . $i . ''] = $this->request->countDataByFieldStatus(2, $i, $year, 5);
+            $data['lynNon' . $i . ''] = $this->request->countDataByFieldStatus(3, $i, $year, 5);
+            $data['lynSi' . $i . ''] = $this->request->countDataByFieldStatus(4, $i, $year, 5);
+
+            $data['rjcUmum' . $i . ''] = $this->request->countDataByFieldStatus(1, $i, $year, -1);
+            $data['rjcKomo' . $i . ''] = $this->request->countDataByFieldStatus(2, $i, $year, -1);
+            $data['rjcNon' . $i . ''] = $this->request->countDataByFieldStatus(3, $i, $year, -1);
+            $data['rjcSi' . $i . ''] = $this->request->countDataByFieldStatus(4, $i, $year, -1);
+        }
+
         $spreadsheet = new Spreadsheet();
 
         $style_row = [
@@ -90,10 +111,106 @@ class Report extends CI_Controller
             }
             $y++;
         }
+
+        $column = 2;
+        for ($i = 1; $i < 13; $i++) {
+            if (isset($data['mskUmum' . $i . ''])) {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 9, $data['mskUmum' . $i . '']);
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 9, 0);
+            }
+
+            if (isset($data['mskKomo' . $i . ''])) {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 10, $data['mskKomo' . $i . '']);
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 10, 0);
+            }
+
+            if (isset($data['mskNon' . $i . ''])) {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 11, $data['mskNon' . $i . '']);
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 11, 0);
+            }
+
+            if (isset($data['mskSi' . $i . ''])) {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 12, $data['mskSi' . $i . '']);
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 12, 0);
+            }
+            $column++;
+            $column++;
+            $column++;
+        }
+
+        $column = 3;
+        for ($i = 1; $i < 13; $i++) {
+            if (isset($data['lynUmum' . $i . ''])) {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 9, $data['lynUmum' . $i . '']);
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 9, 0);
+            }
+
+            if (isset($data['lynKomo' . $i . ''])) {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 10, $data['lynKomo' . $i . '']);
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 10, 0);
+            }
+
+            if (isset($data['lynNon' . $i . ''])) {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 11, $data['lynNon' . $i . '']);
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 11, 0);
+            }
+
+            if (isset($data['lynSi' . $i . ''])) {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 12, $data['lynSi' . $i . '']);
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 12, 0);
+            }
+            $column++;
+            $column++;
+            $column++;
+        }
+
+        $column = 4;
+        for ($i = 1; $i < 13; $i++) {
+            if (isset($data['rjcUmum' . $i . ''])) {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 9, $data['rjcUmum' . $i . '']);
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 9, 0);
+            }
+
+            if (isset($data['rjcKomo' . $i . ''])) {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 10, $data['rjcKomo' . $i . '']);
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 10, 0);
+            }
+
+            if (isset($data['rjcNon' . $i . ''])) {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 11, $data['rjcNon' . $i . '']);
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 11, 0);
+            }
+
+            if (isset($data['rjcSi' . $i . ''])) {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 12, $data['rjcSi' . $i . '']);
+            } else {
+                $spreadsheet->getActiveSheet()->setCellValueByColumnAndRow($column, 12, 0);
+            }
+            $column++;
+            $column++;
+            $column++;
+        }
+
+        $spreadsheet->getActiveSheet()
+            ->setCellValue('AL9', '=SUM(B9:AK9)')
+            ->setCellValue('AL10', '=SUM(B10:AK10)')
+            ->setCellValue('AL11', '=SUM(B11:AK11)')
+            ->setCellValue('AL12', '=SUM(B11:AK12)');
+
         $spreadsheet->getActiveSheet()
             ->mergeCells('A6:A8')
             ->mergeCells('B6:AK6')
-            ->mergeCells('O6:O7')
             ->mergeCells('B7:D7')
             ->mergeCells('E7:G7')
             ->mergeCells('H7:J7')
@@ -117,7 +234,7 @@ class Report extends CI_Controller
         $writer = new Xlsx($spreadsheet);
 
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="Laporan.xlsx"');
+        header('Content-Disposition: attachment;filename="Laporan Bulan ' . $monthFrom . ' - ' . $monthTo . ' ' . $year . '.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer->save('php://output');

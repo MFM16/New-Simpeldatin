@@ -129,4 +129,18 @@ class Visitor extends CI_Controller
             echo json_encode($arr);
         }
     }
+
+    public function getPlace()
+    {
+        $data = $this->visitor->getAllData();
+        if ($data) {
+            $arr = [
+                'status' => true,
+                'message' => 'Get data successfully',
+                'data' => $data
+            ];
+
+            echo json_encode($arr);
+        }
+    }
 }
