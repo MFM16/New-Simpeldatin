@@ -11,7 +11,7 @@ class Place extends CI_Controller
     public function insert()
     {
         $this->form_validation->set_rules('name', 'Nama', 'required|max_length[255]');
-        $this->form_validation->set_rules('city', 'Kota', 'required|alpha');
+        $this->form_validation->set_rules('city', 'Kota', 'required');
         $this->form_validation->set_rules('district', 'Kecamatan', 'required');
         $this->form_validation->set_rules('address', 'Alamat', 'required');
         $this->form_validation->set_rules('latitude', 'Latitude', 'required');
@@ -83,7 +83,7 @@ class Place extends CI_Controller
     public function edit()
     {
         $this->form_validation->set_rules('name', 'Nama', 'required|max_length[255]');
-        $this->form_validation->set_rules('city', 'Kota', 'required|alpha');
+        $this->form_validation->set_rules('city', 'Kota', 'required');
         $this->form_validation->set_rules('district', 'Kecamatan', 'required');
         $this->form_validation->set_rules('address', 'Alamat', 'required');
         $this->form_validation->set_rules('latitude', 'Latitude', 'required');

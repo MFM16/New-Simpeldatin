@@ -1,12 +1,10 @@
 <?php
 
-use function GuzzleHttp\json_encode;
-
 class Place_model extends CI_Model
 {
     public function getDataByDistrict($district)
     {
-        $this->db->like('district', $district);
+        $this->db->like('district', $district, 'both');
         $this->db->from('lbs_table');
         return $this->db->get()->result_array();
     }

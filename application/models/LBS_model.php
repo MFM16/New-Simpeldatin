@@ -7,10 +7,10 @@ class LBS_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    public function getDataByDate($email, $city)
+    public function getDataByDate($email, $district)
     {
         $this->db->where('email', $email);
-        $this->db->where('city', $city);
+        $this->db->where('district', $district);
         $this->db->where('created_at', date('Y-m-d'));
         $this->db->where('deleted_at', NULL);
         $this->db->from('lbs_histories');

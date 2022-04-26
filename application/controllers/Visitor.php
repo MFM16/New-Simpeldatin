@@ -39,17 +39,25 @@ class Visitor extends CI_Controller
 
                 $response = json_encode($arr);
                 echo $response;
+            } else {
+                $arr = [
+                    'status' => true,
+                    'message' => 'Failed',
+                ];
+
+                $response = json_encode($arr);
+                echo $response;
             }
         }
     }
 
     public function email()
     {
-        $city = $this->input->post('city');
+        $district = $this->input->post('locality');
 
         if ($this->session->tempdata('email')) {
             if ($this->session->tempdata('role_id') == 3) {
-                $data = $this->lbs->getDataByDate($this->session->tempdata('email'), $city);
+                $data = $this->lbs->getDataByDate($this->session->tempdata('email'), $district);
                 if ($data) {
                     $arr = [
                         'status' => true,
@@ -59,30 +67,41 @@ class Visitor extends CI_Controller
                     $response = json_encode($arr);
                     echo $response;
                 } else {
-                    $data = $this->place->getDataByCity($city);
+                    $data = $this->place->getDataByDistrict($district);
+                    $list = '';
+                    foreach ($data as $key) {
+                        $newData = '
+                        <a style="margin-bottom: 30px">
+                            <p style="margin-right:20px"><strong>' . $key['name'] . '</strong></p>
+                            <a href="' . $key['gmaps_link'] . '" style="margin-top: -30px">Link</a>
+                        </a>
+                        <br><br>
+                        ';
+
+                        $list .= $newData;
+                    };
+
                     if ($data) {
                         $this->email->from('layanan.pusdatin.kementan@gmail.com', 'Kementrian Pertanian');
                         $this->email->to($this->session->tempdata('email'));
                         $this->email->subject('Terdapat Data baru');
                         $this->email->message("
                         Selamat Pagi, <br>
-                        Yth, Bapak/ibu
+                        Selamat Datang Bapak/ibu " . $this->session->tempdata('name') . " <br>
+                        Yang telah terdaftar di SIMPELDATIN
                         <br><br><br><br>
     
-                        Terdapat data pertanian baru yang mungkin sesuai dengan data yang pernah Bapak/Ibu inginkan.<br>
-                        Silahkan klik link di bawah ini untuk melihat data - data tersebut<br>
-                        <a href='https://satudata.pertanian.go.id/'>Katalog Data</a><br>
-                        <a href='" . base_url('auth/login') . "'>Login Simpeldatin</a><br>
-                        <a href='#'>Guide Book</a><br>
+                        Anda saat ini sedang berada di daerah " . $this->input->post('city') . " <br>
+                        Berikut adalah daerah-derah yang bisa anda kunjungi dalam bentuk titik koordinat. <br><br>
+                        " . $list . " <br><br>
                         <br><br><br>
     
-                        Hormat Kami,<br>
-                        Pusat Data dan Sistem Informasi Pertanian");
+                        Selamat jalan dan hati-hati<br>");
 
                         if ($this->email->send()) {
                             $data = [
                                 'email' => $this->session->tempdata('email'),
-                                'city' => $city,
+                                'district' => $district,
                                 'created_at' => date('y-m-d'),
                                 'deleted_at' => NULL,
                             ];
@@ -101,7 +120,8 @@ class Visitor extends CI_Controller
                                 'message' => 'failed to send email'
                             ];
 
-                            echo json_encode($arr);
+                            $response = json_encode($arr);
+                            echo $response;
                         }
                     } else {
                         $arr = [
@@ -109,7 +129,8 @@ class Visitor extends CI_Controller
                             'message' => 'Data not found',
                         ];
 
-                        echo json_encode($arr);
+                        $response = json_encode($arr);
+                        echo $response;
                     }
                 }
             } else {
@@ -118,7 +139,8 @@ class Visitor extends CI_Controller
                     'message' => 'admin/officer',
                 ];
 
-                echo json_encode($arr);
+                $response = json_encode($arr);
+                echo $response;
             }
         } else {
             $arr = [
@@ -126,7 +148,8 @@ class Visitor extends CI_Controller
                 'message' => 'no email detected',
             ];
 
-            echo json_encode($arr);
+            $response = json_encode($arr);
+            echo $response;
         }
     }
 

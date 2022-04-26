@@ -19,7 +19,7 @@
 <script src="<?= base_url('assets/js/app.js') ?>"></script>
 
 <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZmFyaGFubWF1bGlkaWFuMTYiLCJhIjoiY2wyZTlsNDVnMTc2djNlbGhhbHRsbXQ3OSJ9.5uZyJXUB8qrbxqnmWoSkNg';
+    mapboxgl.accessToken = 'ACCESS_TOKEN';
 
     var map = new mapboxgl.Map({
         container: 'map',

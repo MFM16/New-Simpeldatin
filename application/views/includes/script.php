@@ -31,44 +31,34 @@
         $('#table_id').DataTable();
         $('#table_list').DataTable()
 
-        $.getJSON("https://api.freegeoip.app/json/?apikey=e17967d0-c21e-11ec-84b9-cfbfccf23a36", function(response) {
+        $.getJSON("https://api.ipgeolocation.io/ipgeo?apiKey=API_KEY", function(response) {
+            var data = new FormData();
+            data.append('ip', response.ip)
+            data.append('city', response.city)
+            data.append('latitude', response.latitude)
+            data.append('longitude', response.longitude)
+            data.append('locality', response.district)
 
-            var latitude = response.latitude;
-            var longitude = response.longitude;
-            var ip = response.ip;
-
-            $.getJSON("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + latitude + "&longitude= " + longitude + "&localityLanguage=en", function(response) {
-
-                var data = new FormData();
-                data.append('ip', ip)
-                data.append('city', response.city)
-                data.append('latitude', response.latitude)
-                data.append('longitude', response.longitude)
-                data.append('locality', response.locality)
-
-                $.ajax({
-                    url: '<?= base_url('visitor/insert') ?>',
-                    type: 'POST',
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    success: function(result) {
-                        var data = new FormData();
-                        data.append('city', response.city)
-                        $.ajax({
-                            url: '<?= base_url('visitor/email'); ?>',
-                            type: 'POST',
-                            data: data,
-                            processData: false,
-                            contentType: false,
-                            cache: false,
-                            success: function(result) {
-                                console.log(JSON.parse(result));
-                            }
-                        })
-                    }
-                })
+            $.ajax({
+                url: '<?= base_url('visitor/insert') ?>',
+                type: 'POST',
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(result) {
+                    $.ajax({
+                        url: '<?= base_url('visitor/email'); ?>',
+                        type: 'POST',
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        success: function(result) {
+                            console.log(JSON.parse(result));
+                        }
+                    })
+                }
             })
         });
 
